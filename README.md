@@ -1,1 +1,1 @@
-# frequent-areas-of-interest
+# visualizing-areas-of-interest
