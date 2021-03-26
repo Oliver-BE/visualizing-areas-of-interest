@@ -1,3 +1,4 @@
+
 library(leaflet)
 library(AOI)
 library(rgeos)
@@ -8,7 +9,7 @@ map <- leaflet() %>%
   setView(lng=116.4074, lat=39.9042, zoom=11) %>% 
   addMarkers(lng=116.4074, lat=39.9042, popup="The birthplace of R")
 map
- 
+
 
 #  setView(lng=116.4074, lat=39.9042, zoom=4)  
 
@@ -43,4 +44,3 @@ mapboxer(
     pos = "top-right",
     text = "mapboxer"
   )
-  
