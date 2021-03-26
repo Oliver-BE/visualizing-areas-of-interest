@@ -4,56 +4,34 @@ library(shiny)
 library(shinythemes)  
 library(shinycssloaders) 
 library(plotly)
+library(leaflet)
+library(AOI)
 
 
 # UI  --------------------------------------------------------------------------
 ui <- fluidPage(
   # set theme
-  theme = shinytheme("yeti"),
-  # shinythemes::themeSelector(),
+  theme = shinytheme("flatly"),
+  #shinythemes::themeSelector(),
   
   # set favicon
-  tags$head(tags$link(rel="shortcut icon", href="./www/favicon.ico")),
-  tags$head(tags$link(rel="icon", href="./www/favicon.ico")),
+  # tags$head(tags$link(rel="shortcut icon", href="./www/favicon.ico")),
+  # tags$head(tags$link(rel="icon", href="./www/favicon.ico")),
   
-  tags$style(type="text/css",
-             ".shiny-output-error { visibility: hidden; }",
-             ".shiny-output-error:before { visibility: hidden; }"
-  ),
+  # tags$style(type="text/css",
+  #            ".shiny-output-error { visibility: hidden; }",
+  #            ".shiny-output-error:before { visibility: hidden; }"
+  # ),
 
-  navbarPage(title = "Apex Dashboard"),
+  navbarPage(title = "Visualizing Areas of Interest in Beijing"),
 
   # Row 1 (inputs)
   fluidRow( 
     column(
-      width = 2,
-      img(
-        src = "apex_logo_2.png", height = 100
-      ),
-      align = "center"
-    ), 
-    
-    column(
-      width = 3,
+      width = 4, offset = 1,
       selectInput(
-        inputId = "chosen_person",
-        label = "Choose your Player: ",
-        choices = c(
-          "Compare All" = "All",
-          "Oliver" = "Oliver",
-          "Nat" = "Nat",
-          "Isaac" = "Isaac",
-          "Connor" = "Connor",
-          "Thomas" = "Thomas"
-        ),
-        selected = "All"
-      )
-    ),
-    column(
-      width = 2,
-      selectInput(
-        inputId = "chosen_stat",
-        label = "Choose a statistic: ",
+        inputId = "chosen_subject",
+        label = "Choose a subject: ",
         choices = c(
           "All" = "All",
           "Damage" = "Damage",
@@ -65,10 +43,10 @@ ui <- fluidPage(
       )
     ), 
     column(
-      width = 5,
+      width = 6, offset = 1,
       sliderInput(
-        inputId = "min_survival_time",
-        label = "Filter by minimum survival time (in minutes):",
+        inputId = "time_stamp",
+        label = "Datetime slider",
         min = 0, max = 20, value = 0, step = 0.5,
         ticks = TRUE
       )
@@ -76,7 +54,8 @@ ui <- fluidPage(
   ),
 
   hr(),
-  # Row 3 (text output and plots)
+  
+  # Row 2 (text output and plots)
   fluidRow(  
     # column to output plots (as tabs)
     column(
@@ -85,50 +64,32 @@ ui <- fluidPage(
         tabsetPanel(
           type = "tabs",
           tabPanel(
-            "All Games",
+            title = "Map",
             br(),
             shinycssloaders::withSpinner(
-              DT::dataTableOutput(
-                outputId = "all_games_dt"
-              )
+              leafletOutput("leaflet_map", height=500)
             )
           ),
           tabPanel(
-            "Summary Stats",
+            title = "Plot1",
             br(),
             shinycssloaders::withSpinner(
-              DT::dataTableOutput(
-                outputId = "summary_stats_dt"
-              )
+              # plotlyOutput()
+              print("HI")
             )
           ),
           tabPanel(
-            "Stats Over Time Chart",
+            title = "Plot2",
             br(),
             shinycssloaders::withSpinner(
-              plotlyOutput("over_time_fig")
-            )
-          ),
-          tabPanel(
-            "Leaderboard",
-            br(),
-            shinycssloaders::withSpinner(
-              DT::dataTableOutput(
-                outputId = "leaderboard_dt"
-              )
-            )
-          ), 
-          tabPanel(
-            "Legends Used",
-            br(),
-            shinycssloaders::withSpinner(
-              plotlyOutput("donut_fig")
+              # plotlyOutput()
+              print("HI")
             )
           )
         )
       ),
-      style = "padding:10px 10px 10px 10px;"
+     # style = "padding:10px 10px 10px 10px;"
     ),
     
-  ) # end row 3
+  ) # end row 2
 ) # end UI
