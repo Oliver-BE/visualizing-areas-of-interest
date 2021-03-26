@@ -2,10 +2,6 @@ library(RMySQL)
 library(DBI)
 library(dplyr)
 
-Sys.setenv(USERNAME = "admin",
-           PASSWORD = "rpKYHBYjJxvlau7SitvT",
-           HOST = "oh-no.cfvioc3bi4a1.us-east-1.rds.amazonaws.com")
-
 cn <- dbConnect(drv      = RMySQL::MySQL(), 
                 username = Sys.getenv("USERNAME"), 
                 password = Sys.getenv("PASSWORD"), 
