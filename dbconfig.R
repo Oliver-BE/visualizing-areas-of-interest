@@ -1,8 +1,8 @@
-library(RMySQL)
+library(RMariaDB)
 library(DBI)
 library(dplyr)
 
-cn <- dbConnect(drv      = RMySQL::MySQL(), 
+cn <- dbConnect(drv      = RMariaDB::MariaDB(), 
                 username = Sys.getenv("USERNAME"), 
                 password = Sys.getenv("PASSWORD"), 
                 host     = Sys.getenv("HOST"), 
