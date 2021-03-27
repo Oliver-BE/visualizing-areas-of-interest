@@ -6,10 +6,7 @@ library(lubridate)
 library(leaflet)
 library(plotly)
 library(anytime)
-library(AOI)
-# library(DBI)
-# library(RColorBrewer)
-# source("./global.R")
+library(AOI) 
 
 # Server -----------------------------------------------------------------------
 server <- function(input, output, session) {
