@@ -1,4 +1,5 @@
 ################## LOAD PACKAGES ####################
+print("server.R")
 library(tidyverse)
 library(shiny)
 library(shinythemes)
