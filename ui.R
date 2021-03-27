@@ -40,7 +40,7 @@ ui <- fluidPage(# set theme
                                            tabPanel(title = "Map",
                                                     br(),
                                                     # shinycssloaders::withSpinner(
-                                                    leafletOutput("leaflet_map", height = 500)
+                                                    leafletOutput("leaflet_map", height = 550)
                                                     # )
                                            ),
                                            tabPanel(title = "Plot1",
@@ -54,7 +54,7 @@ ui <- fluidPage(# set theme
                                          )
                                        ))
                               )))),
-                    myAboutPage,
-                    footer = "Connor, Isaac and Ollie made this in 2021"
+                    myAboutPage
+                    # footer = "Connor, Isaac and Ollie made this in 2021"
     )# end navbarPage
   ) # end UI

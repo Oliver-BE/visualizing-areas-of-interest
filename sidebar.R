@@ -21,26 +21,26 @@ mySidebar <- sidebarPanel(
                                            label = "Choose a person:",
                                            choices =
                                              c("Randomly" = "Randomly",
-                                               "By id" = "Id")
+                                               "By ID" = "Id")
                                          )
                                        ),
                                        fluidRow(numericInput(
                                          inputId = "chosen_id",
-                                         label = "Id:",
+                                         label = "ID:",
                                          value = 0,
                                          min =0,
                                          max = 182
                                        )),
                                        fluidRow(numericInput(
                                          inputId = "days_id",
-                                         label = "over __ days:",
+                                         label = "Over how many days?",
                                          value = 1,
                                          min =1,
                                          max = 10 
                                          
                                        )),
                                        
-                                       fluidRow(actionButton(inputId = "one_person_id", label = "Vizualize")),
+                                       fluidRow(actionButton(inputId = "one_person_id", label = "Visualize"), align = "center"),
                                      ),
                                      tabPanel("Many People on one day",
                                               fluidRow(numericInput(
@@ -50,5 +50,5 @@ mySidebar <- sidebarPanel(
                                                 label = "How Many People?",
                                                 value = 2
                                               )),
-                                              fluidRow(actionButton(inputId = "many_people_id", label = "Vizualize"))
+                                              fluidRow(actionButton(inputId = "many_people_id", label = "Visualize"), align = "center")
                                    ))))
