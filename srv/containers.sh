@@ -61,5 +61,5 @@ echo "###    Adding update scripts to crontab"
 sudo chmod -x ~/visualizing-areas-of-interest/srv/refreshServer.sh
 #sudo cp /srv/refreshServer.sh /etc/cron.hourly/
 #sudo chmod -x /srv/shinyapps/visualizing-areas-of-interest/srv/refreshServer.sh
-(crontab -l 2>/dev/null; echo "* * * * * ~/visualizing-areas-of-interest/srv/refreshServer.sh") | crontab -
+(crontab -l 2>/dev/null; echo "* * * * * sudo bash ~/visualizing-areas-of-interest/srv/refreshServer.sh") | crontab -
 #(crontab -l 2>/dev/null; echo "00 02 * * * docker run --rm -v /srv/shinyapps/RShiny_BiophysicalModelMap:/code yutaro/updates >> '/home/ec2-user/yutaro_app_updates.log' 2>&1") | crontab -
