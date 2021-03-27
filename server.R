@@ -1,80 +1,111 @@
 library(tidyverse)
 library(shiny)
-library(ggplot2)
+library(shinyjs)
+library(ggplot2) 
 library(lubridate)
 library(leaflet)
 library(plotly)
 library(anytime)
 library(AOI)
-source("./global.R")
+# library(DBI)
+# library(RColorBrewer)
+# source("./global.R")
 
 # Server -----------------------------------------------------------------------
 server <- function(input, output, session) {
   
-  # Reactive objects -----------------------------------------------------------
-  # user_0_react <- reactive({
-  #   req(input$slider_input) 
-  #   time_input_min <- ymd_hms(input$slider_input[1])
-  #   time_input_max <- ymd_hms(input$slider_input[2])
-  #   # time_input <- ymd_hms(input$slider_input) 
-  #   
-  #   
-  #   df <- user_0 %>%
-  #     filter(time >= time_input_min & time <= time_input_max)
-  #   # filter(time <= time_input) 
-  #   
-  #   return(df)
-  # })
+  # establish database connection
+  args <- list(
+    drv = RMySQL::MySQL(),
+    username = Sys.getenv("USERNAME"),
+    password = Sys.getenv("PASSWORD"),
+    host     = Sys.getenv("HOST"),
+    port     = 3306,
+    dbname   = "stinky")
   
-  # min_timestamp <- reactive({
-  #   df <- user_0
-  #   return(min(df$time))
-  # })
-  # 
-  # max_timestamp <- reactive({
-  #   df <- user_0 
-  #   return(max(df$time))
-  # })
+  # conn <- do.call(DBI::dbConnect, args) %>%
+  #   tbl("bejing") 
+  # on.exit(DBI::dbDisconnect(conn))
+  
+  # Reactive objects -----------------------------------------------------------
+  # process one-person data when user clicks action button
+  one_person_data <- eventReactive(input$one_person_id, {  
+    conn <- do.call(RMySQL::dbConnect, args) 
+    on.exit(RMySQL::dbDisconnect(conn))
+    
+    # figure out if random person or pre-selected
+    if(input$chosen_random == "Randomly") {
+      all_users <- c('0','1','2','3','4','5','8','9','10','11','13','14','15','16','17','22','25','28','30','34','35','36','37','38','39','41','42','44','62','68','82','84','85','96','126','128','144','153','163','167','179')
+      person_input <- sample(all_users, 1)
+    } 
+    else {
+      person_input <- input$chosen_id
+    }
+    
+    df <- conn %>%  
+      tbl("beijing") %>%   
+      filter(user == person_input) %>% 
+      collect()
+    
+    df <- df %>% 
+      mutate(user = as.factor(user))
+    
+    return(df)
+  }, ignoreNULL = FALSE, ignoreInit = FALSE)
+  
+  # process many-people data when user clicks action button
+  many_person_data <- eventReactive(input$many_people_id, {  
+    conn <- do.call(RMySQL::dbConnect, args) 
+    on.exit(RMySQL::dbDisconnect(conn))
+    
+    # get input of number of people to compare
+    num_people <- input$chosen_amount
+    
+    # randomly select
+    all_users <- c('0','1','2','3','4','5','8','9','10','11','13','14','15','16','17','22','25','28','30','34','35','36','37','38','39','41','42','44','62','68','82','84','85','96','126','128','144','153','163','167','179')
+    chosen_people <- sample(all_users,num_people)
+    
+    
+    df <- conn %>%  
+      tbl("beijing") %>%   
+      filter(user %in% chosen_people) %>% 
+      collect()
+    
+    df <- df %>% 
+      mutate(user = as.factor(user))
+    
+    return(df)
+  }, ignoreNULL = FALSE, ignoreInit = FALSE)
   
   
   # Outputs --------------------------------------------------------------------
-  # all games datatable output
-  # output$all_games_dt <- DT::renderDataTable(DT::datatable(all_games()))
-  
-  output$leaflet_map <- renderLeaflet({
-    # df <- user_0_react()
-    df <- user_0
+  # leaflet output
+  output$leaflet_map <- renderLeaflet({ 
+    # if only looking at one person
+    if(input$tab_panel_id == "single_person_tab") {
+      df <- one_person_data()
+    }
+    if(input$tab_panel_id == "many_person_tab") {
+      df <- many_person_data()
+    }
     
+      
     map <- leaflet(data = df) %>%  
-      addProviderTiles(providers$OpenStreetMap.DE)  %>% 
-      # addProviderTiles(providers$Stamen.TonerLite)  %>%
-      # setView(lng=116.4074, lat=39.9042, zoom=10) %>% 
-      setView(lng=mean(df$lon), lat=mean(df$lat), zoom=13) %>% 
-      addPolylines(lng = ~lon, lat = ~lat, 
-                   weight = 3,
-                   opacity = 3) %>%
-      addMarkers(lng=~lon, lat=~lat, 
-                 popup = paste("<b><u>","User Number ", df$user, "</u></b>", "<br>",
-                               "<b> Date: </b>", date(df$time), "<br>",
-                               "<b> Time: </b>", strftime(df$time, format="%H:%M:%S"), "<br>"))
+      # addProviderTiles(providers$OpenStreetMap.DE)  %>% 
+      addProviderTiles(providers$Stamen.TonerLite)  %>% 
+      setView(lng=116.4074, lat=39.9042, zoom=10) 
+    
+    colors <- c(brewer.pal(11, "Spectral"), brewer.pal(11, "RdYlGn"),
+                brewer.pal(11, "PuOr"), brewer.pal(8, "BrBG") )  
+    
+    for(user_number in levels(df$user)) {
+      sel_color <- sample(colors, 1)  
+      
+      map <- map %>%
+        addPolylines(lng = ~lon, lat = ~lat, data=df[df$user == user_number,], color = sel_color,
+                     weight = 2, opacity = 3)
+    }
     
     return(map)
   })
-  
-  # create dynamic slider based on date range of subject
-  # output$slider_input <- renderUI({
-  #   sliderInput(
-  #     inputId = "slider_input",
-  #     label = "Select a time stamp:",
-  #     min = min_timestamp(),
-  #     max = max_timestamp(),
-  #     value = c(min_timestamp(), max_timestamp()),
-  #     # value = min_timestamp(),
-  #     step = 100,
-  #     dragRange = TRUE,
-  #     # animate = animationOptions(interval=300, loop=TRUE, playButton="testme"),
-  #     width = "95%"
-  #   )
-  # })
-  
 }

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 library(tidyverse)
 library(shiny)
 library(shinyjs)
@@ -31,3 +32,5 @@ user_0 <- read_csv("dat/test_data.csv") %>%
   select(-c(X1))
 
 data(user_0)
+=======
+>>>>>>> Stashed changes

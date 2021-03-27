@@ -13,7 +13,8 @@ mySidebar <- sidebarPanel(
                           fluidRow(width = 8,
                                    navbarPage(
                                      "See Lives of:",
-                                     tabPanel(
+                                     tabsetPanel(
+                                       tabPanel(
                                        "One Person",
                                        fluidRow(
                                          radioButtons(
@@ -21,34 +22,34 @@ mySidebar <- sidebarPanel(
                                            label = "Choose a person:",
                                            choices =
                                              c("Randomly" = "Randomly",
-                                               "By ID" = "Id")
+                                               "By ID" = "Id"),
+                                           selected = "Id"
                                          )
                                        ),
-                                       fluidRow(numericInput(
-                                         inputId = "chosen_id",
-                                         label = "ID:",
-                                         value = 0,
-                                         min =0,
-                                         max = 182
-                                       )),
-                                       fluidRow(numericInput(
-                                         inputId = "days_id",
-                                         label = "Over how many days?",
-                                         value = 1,
-                                         min =1,
-                                         max = 10 
-                                         
-                                       )),
+                                       fluidRow(
+                                         selectInput(
+                                          inputId = "chosen_id",
+                                          label = "ID:",
+                                          choices = c('0','1','2','3','4','5','8','9','10','11','13','14','15','16','17','22','25','28','30','34','35','36','37','38','39','41','42','44','62','68','82','84','85','96','126','128','144','153','163','167','179'
+                                                      ),
+                                          selected = "14"
+                                        )
+                                       ),
                                        
                                        fluidRow(actionButton(inputId = "one_person_id", label = "Visualize"), align = "center"),
-                                     ),
+                                       value = "single_person_tab"
+                                     ), 
+                                     
+                                     # tab 2
                                      tabPanel("Many People on one day",
                                               fluidRow(numericInput(
                                                 min=1,
-                                                max=100,
+                                                max=40,
                                                 inputId = "chosen_amount",
                                                 label = "How Many People?",
                                                 value = 2
                                               )),
-                                              fluidRow(actionButton(inputId = "many_people_id", label = "Visualize"), align = "center")
-                                   ))))
+                                              fluidRow(actionButton(inputId = "many_people_id", label = "Visualize"), align = "center"),
+                                              value = "many_person_tab"
+                                       ), id = "tab_panel_id")
+                                   )))
