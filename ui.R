@@ -22,6 +22,7 @@ ui <- fluidPage(# set theme
   #            ".shiny-output-error { visibility: hidden; }",
   #            ".shiny-output-error:before { visibility: hidden; }"
   # ),
+   
   
   navbarPage(
     title = "Areas of Interest in Beijing",
@@ -39,20 +40,11 @@ ui <- fluidPage(# set theme
                                            type = "tabs",
                                            tabPanel(title = "Map",
                                                     br(),
-                                                    # shinycssloaders::withSpinner(
+                                                    shinycssloaders::withSpinner(
                                                     leafletOutput("leaflet_map", height = 550)
-                                                    # )
-                                           ),
-                                           tabPanel(title = "Plot1",
-                                                    br(),
-                                                    shinycssloaders::withSpinner(# plotlyOutput()
-                                                      print("HI"))),
-                                           tabPanel(title = "Plot2",
-                                                    br(),
-                                                    shinycssloaders::withSpinner(# plotlyOutput()
-                                                      print("HI")))
-                                         )
-                                       ))
+                                                    )
+                                           )
+                                       )))
                               )))),
                     myAboutPage
                     # footer = "Connor, Isaac and Ollie made this in 2021"

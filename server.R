@@ -23,10 +23,6 @@ server <- function(input, output, session) {
     port     = 3306,
     dbname   = "stinky")
   
-  # conn <- do.call(DBI::dbConnect, args) %>%
-  #   tbl("bejing") 
-  # on.exit(DBI::dbDisconnect(conn))
-  
   # Reactive objects -----------------------------------------------------------
   # process one-person data when user clicks action button
   one_person_data <- eventReactive(input$one_person_id, {  
@@ -89,14 +85,33 @@ server <- function(input, output, session) {
       df <- many_person_data()
     }
     
+    
+    # leaflet title
+    tag.map.title <- tags$style(HTML("
+    .leaflet-control.map-title { 
+        transform: translate(-50%,20%);
+        position: fixed !important;
+        left: 50%;
+        text-align: center;
+        padding-left: 10px; 
+        padding-right: 10px; 
+        background: rgba(255,255,255,0.75);
+        font-weight: bold;
+        font-size: 24px;
+      }
+    "))
+    
+    title <- tags$div(
+      tag.map.title, HTML("Users in Beijing")
+    )
       
     map <- leaflet(data = df) %>%  
       # addProviderTiles(providers$OpenStreetMap.DE)  %>% 
       addProviderTiles(providers$Stamen.TonerLite)  %>% 
-      setView(lng=116.4074, lat=39.9042, zoom=10) 
+      setView(lng=116.4074, lat=39.9042, zoom=10) %>% 
+      addControl(title, position = "topleft", className="map-title")
     
-    colors <- c(brewer.pal(11, "Spectral"), brewer.pal(11, "RdYlGn"),
-                brewer.pal(11, "PuOr"), brewer.pal(8, "BrBG") )  
+    colors <- c("#6bdf12","#57d29d","#65179c","#74125c","#ba265b","#E08214","#B2ABD2","#8073AC", "#542788", "#2D004B", "#8C510A", "#BF812D","#DFC27D","#F6E8C3", "#C7EAE5", "#80CDC1", "#35978F", "#9E0142", "#D53E4F","#F46D43","#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598","#ABDDA4","#FFCC33","#FF0033", "#9D1027", "#AE4978", "#62F423")
     
     for(user_number in levels(df$user)) {
       sel_color <- sample(colors, 1)  
