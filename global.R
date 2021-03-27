@@ -5,7 +5,7 @@ library(shinyjs)
 library(lubridate)
 library(AOI) 
 library(readr)
-source("./dbconfig.R")
+#source("./dbconfig.R")
 
 # Initial code ----------------------------------------------------------------- 
 # read in data
