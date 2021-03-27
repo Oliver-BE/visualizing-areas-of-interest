@@ -40,8 +40,7 @@ ls
 docker build -t shiny-server .
 echo "###   Running RShiny server"
 #sudo docker run -d -p 3838:3838 -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server
-sudo docker run --name shiny -d --expose 3838 --env "VIRTUAL_HOST=geolife.ml" --env "VIRTUAL_PORT=3838" --env "LETSENCRYPT_HOST=geolife.ml" --env "LETSENCRYPT_EMAIL=carusoisaac@gmail.com" -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server # --volumes-from r-data
-
+sudo docker run --name shiny -d --expose 3838 --env "VIRTUAL_HOST=geolife.ml" --env "VIRTUAL_PORT=3838" --env "LETSENCRYPT_HOST=geolife.ml" --env "LETSENCRYPT_EMAIL=carusoisaac@gmail.com" -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server --env USERNAME = "" --env PASSWORD = "" --env HOST = ""
 # Pull apps from github (TO ADD MORE APPS: add a git pull line below for any additional repositories)
 cd /srv/shinyapps/
 sudo git clone https://github.com/Oliver-BE/visualizing-areas-of-interest.git
