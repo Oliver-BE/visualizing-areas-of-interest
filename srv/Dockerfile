@@ -23,7 +23,8 @@ RUN install2.r --error \
     RMariaDB \
     DBI \
     shinyjs \
-    pool
+    pool \
+    anytime
     
 COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 
