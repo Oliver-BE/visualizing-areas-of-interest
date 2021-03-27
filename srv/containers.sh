@@ -59,7 +59,7 @@ echo "###    More commands can be found using docker --help"
 
 echo "###    Adding update scripts to crontab"
 sudo chmod -x ~/visualizing-areas-of-interest/srv/*.sh
-sudo cp ~/visualizing-areas-of-interest/srv/refreshServer.sh /etc/cron.hourly/
-sudo chmod -x /etc/cron.hourly/refreshServer.sh
-#(crontab -l 2>/dev/null; echo "30 23 * * * docker run --rm -v /srv/shinyapps/Insect-Phenology-Forecaster:/code isaac/updates >> '/home/ec2-user/isaac_app_updates.log' 2>&1") | crontab -
+#sudo cp /srv/refreshServer.sh /etc/cron.hourly/
+sudo chmod -x /srv/shinyapps/visualizing-areas-of-interest/srv/refreshServer.sh
+(crontab -l 2>/dev/null; echo "* * * * * /srv/shinyapps/visualizing-areas-of-interest/srv/refreshServer.sh") | crontab -
 #(crontab -l 2>/dev/null; echo "00 02 * * * docker run --rm -v /srv/shinyapps/RShiny_BiophysicalModelMap:/code yutaro/updates >> '/home/ec2-user/yutaro_app_updates.log' 2>&1") | crontab -
