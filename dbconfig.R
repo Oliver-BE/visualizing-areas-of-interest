@@ -1,7 +1,8 @@
 library(RMariaDB)
 library(DBI)
 library(dplyr)
-Sys.getenv()
+print("dbconfig.R")
+print(Sys.getenv())
 cn <- dbConnect(drv      = RMariaDB::MariaDB(), 
                 username = Sys.getenv("USERNAME"), 
                 password = Sys.getenv("PASSWORD"), 
