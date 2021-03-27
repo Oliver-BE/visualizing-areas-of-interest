@@ -25,7 +25,7 @@ source("./dbconfig.R")
 #          # time < ymd_hms("2008-10-24 00:00:00", tz = "Asia/Brunei")) 
 
 
-user_0_minute <- user_0[seq(1, nrow(user_0), 12), ]
+#user_0_minute <- user_0[seq(1, nrow(user_0), 12), ]
 # write.csv(user_0_minute, "dat/test_data.csv")
 
 user_0 <- read_csv("dat/test_data.csv") %>% 
