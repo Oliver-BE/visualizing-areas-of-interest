@@ -1,7 +1,13 @@
 FROM rocker/shiny-verse
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends 
+  && apt-get install -y --no-install-recommends
+    libudunits2-dev \
+    libpoppler-cpp-dev \
+    libgdal-dev \
+    libproj-dev \ 
+    tcl \
+    tk
 
 #RUN R -e "devtools::install_github('rstudio/shiny')"
 #RUN R -e "devtools::install_github('ropensci/USAboundariesData')"
