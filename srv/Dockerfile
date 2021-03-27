@@ -22,7 +22,8 @@ RUN install2.r --error \
     lubridate \
     RMariaDB \
     DBI \
-    shinyjs
+    shinyjs \
+    pool
     
 COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
 

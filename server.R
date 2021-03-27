@@ -1,6 +1,6 @@
+print("server.R")
 library(tidyverse)
 library(shiny)
-library(shinyjs)
 library(ggplot2)
 library(lubridate)
 library(leaflet)
