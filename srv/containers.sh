@@ -30,7 +30,7 @@ echo "###   Creating shared volume"
 echo "Shared filesystem is located at /srv/shinyapps"
 
 ls
-if [ -d "~/apex-dashboard" ]; then 
+if [ -d "~/visualizing-areas-of-interest" ]; then 
     git clone https://github.com/Oliver-BE/visualizing-areas-of-interest.git
 fi
 
