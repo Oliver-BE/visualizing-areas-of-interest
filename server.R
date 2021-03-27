@@ -1,3 +1,4 @@
+print("server.R")
 library(tidyverse)
 library(shiny)
 library(shinyjs)
