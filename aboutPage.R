@@ -48,7 +48,7 @@ myAboutPage <- navbarMenu(
                  tags$p("The team is comprised of three Amherst College Seniors:"),
                  tags$ul(
                  tags$li("Connor Haugh cleaned data and masterminded UX/UI."),
-                 tags$li("Oliver Baldwin-Edwards wrote the core data visualizations."),
+                 tags$li("Oliver Baldwin Edwards wrote the core data visualizations."),
                  tags$li("Isaac Caruso masterminded hosting and deployment.")
                  ),
                  tags$p("This project is for the 2021 HACKSMITH event, created in less than 24 hours."),
