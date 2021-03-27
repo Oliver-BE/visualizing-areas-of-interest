@@ -7,7 +7,7 @@ library(pool)
 print("dbconfig.R")
 print(Sys.getenv())
 Sys.getenv("PATH")
-cn <- dbPool(drv      = RMariaDB::MariaDB(), 
+cn <- dbPool(drv = RMariaDB::MariaDB(), 
                 username = Sys.getenv("USERNAME"), 
                 password = Sys.getenv("PASSWORD"), 
                 host     = Sys.getenv("HOST"), 
