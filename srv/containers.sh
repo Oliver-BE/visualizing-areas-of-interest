@@ -34,7 +34,7 @@ if [ -d "~/visualizing-areas-of-interest" ]; then
     git clone https://github.com/Oliver-BE/visualizing-areas-of-interest.git
 fi
 
-cd ~/apex-dashboard/srv
+cd ~/visualizing-areas-of-interest/srv
 echo "###   Building RShiny server"
 ls
 docker build -t shiny-server .
