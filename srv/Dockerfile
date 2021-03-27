@@ -20,10 +20,9 @@ RUN install2.r --error \
     shinycssloaders \
     shinythemes \
     lubridate \
-    RMariaDB \
+    RMySQL \
     DBI \
     shinyjs \
-    pool \
     anytime
     
 COPY shiny-customized.config /etc/shiny-server/shiny-server.conf
