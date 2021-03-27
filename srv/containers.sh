@@ -31,7 +31,7 @@ echo "Shared filesystem is located at /srv/shinyapps"
 
 ls
 if [ -d "~/apex-dashboard" ]; then 
-    git clone https://github.com/Oliver-BE/apex-dashboard.git
+    git clone https://github.com/Oliver-BE/visualizing-areas-of-interest.git
 fi
 
 cd ~/apex-dashboard/srv
@@ -40,11 +40,11 @@ ls
 docker build -t shiny-server .
 echo "###   Running RShiny server"
 #sudo docker run -d -p 3838:3838 -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server
-sudo docker run --name shiny -d --expose 3838 --env "VIRTUAL_HOST=*.apexdashboard.ml" --env "VIRTUAL_PORT=3838" --env "LETSENCRYPT_HOST=*.apexdashboard.ml" --env "LETSENCRYPT_EMAIL=carusoisaac@gmail.com" -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server # --volumes-from r-data
+sudo docker run --name shiny -d --expose 3838 --env "VIRTUAL_HOST=geolife.ml" --env "VIRTUAL_PORT=3838" --env "LETSENCRYPT_HOST=geolife.ml" --env "LETSENCRYPT_EMAIL=carusoisaac@gmail.com" -v /srv/shinyapps/:/srv/shiny-server/ -v /srv/shinylog/:/var/log/shiny-server/ shiny-server # --volumes-from r-data
 
 # Pull apps from github (TO ADD MORE APPS: add a git pull line below for any additional repositories)
 cd /srv/shinyapps/
-sudo git clone https://github.com/Oliver-BE/apex-dashboard.git
+sudo git clone https://github.com/Oliver-BE/visualizing-areas-of-interest.git
 cd ~/
 
 echo "###   The following apps have been pulled to the shiny server"
@@ -58,7 +58,8 @@ echo "###    More commands can be found using docker --help"
 
 
 echo "###    Adding update scripts to crontab"
-sudo chmod -x ~/apex-dashboard/srv/*.sh
-sudo cp ~/apex-dashboard/srv/refreshServer.sh /etc/cron.hourly/
+sudo chmod -x ~/visualizing-areas-of-interest/srv/*.sh
+sudo cp ~/visualizing-areas-of-interest/srv/refreshServer.sh /etc/cron.hourly/
+sudo chmod -x /etc/cron.hourly/refreshServer.sh
 #(crontab -l 2>/dev/null; echo "30 23 * * * docker run --rm -v /srv/shinyapps/Insect-Phenology-Forecaster:/code isaac/updates >> '/home/ec2-user/isaac_app_updates.log' 2>&1") | crontab -
 #(crontab -l 2>/dev/null; echo "00 02 * * * docker run --rm -v /srv/shinyapps/RShiny_BiophysicalModelMap:/code yutaro/updates >> '/home/ec2-user/yutaro_app_updates.log' 2>&1") | crontab -
