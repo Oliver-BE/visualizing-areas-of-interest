@@ -7,8 +7,8 @@ library(plotly)
 library(leaflet)
 library(AOI)
 
-source('sidebar.R')
-source('aboutPage.R')
+source('./sidebar.R')
+source('./aboutPage.R')
 
 # UI  --------------------------------------------------------------------------
 ui <- fluidPage(# set theme
@@ -39,9 +39,10 @@ ui <- fluidPage(# set theme
                                            type = "tabs",
                                            tabPanel(title = "Map",
                                                     br(),
-                                                    shinycssloaders::withSpinner(
-                                                      leafletOutput("leaflet_map", height = 500)
-                                                    )),
+                                                    # shinycssloaders::withSpinner(
+                                                    leafletOutput("leaflet_map", height = 500)
+                                                    # )
+                                           ),
                                            tabPanel(title = "Plot1",
                                                     br(),
                                                     shinycssloaders::withSpinner(# plotlyOutput()
@@ -52,8 +53,8 @@ ui <- fluidPage(# set theme
                                                       print("HI")))
                                          )
                                        ))
-                              ))),
+                              )))),
                     myAboutPage,
-                    footer = "Connor, Isaac and Ollie made this in 2021")
+                    footer = "Connor, Isaac and Ollie made this in 2021"
     )# end navbarPage
   ) # end UI
