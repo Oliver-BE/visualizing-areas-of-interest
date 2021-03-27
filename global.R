@@ -1,4 +1,3 @@
-print("global.R")
 library(tidyverse)
 library(shiny)
 library(shinyjs)
